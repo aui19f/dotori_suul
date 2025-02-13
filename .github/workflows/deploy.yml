@@ -14,17 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js (이 예제에서는 Node.js 14버전을 사용)
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '21'
 
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Build the project (React, Vue, Angular 등에서 사용하는 빌드 명령어)
+      - name: Build TypeScript project
+        run: npx tsc
+
+      # Step 4: Build the project
       - name: Build project
         run: npm run build
 
