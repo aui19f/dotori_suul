@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase (Optional - for deployment)
-        if: github.ref == 'refs/heads/branch'
+        if: github.ref == 'refs/heads/master'
         run: |
           curl -sL https://firebase.tools | bash
           firebase deploy --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
