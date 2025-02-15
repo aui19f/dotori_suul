@@ -1,38 +1,40 @@
-name: Firebase Hosting Deploy
+name: CI for React + TypeScript with Vite
 
 on:
   push:
     branches:
-      - master  # master 브랜치에 푸시할 때마다 실행됩니다.
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '21'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
-
+      
       - name: Build TypeScript project
         run: npx tsc
 
-      # Step 4: Build the project
+      - name: Run tests
+        run: npm run test -- --coverage
+
       - name: Build project
         run: npm run build
 
-      # Step 5: Deploy to Firebase Hosting
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase (Optional - for deployment)
+        if: github.ref == 'refs/heads/branch'
         run: |
           curl -sL https://firebase.tools | bash
           firebase deploy --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
