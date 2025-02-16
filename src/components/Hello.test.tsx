@@ -14,7 +14,7 @@ describe("Counter", () => {
 
     fireEvent.click(button);
 
-    expect(screen.getByText("2")).toBeInTheDocument();
+    expect(screen.getByText("1")).toBeInTheDocument();
   });
 
   it("decrement count when decrement button is clicked", () => {
