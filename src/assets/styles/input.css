@@ -1,7 +1,6 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
-
-/* 테스트 코드 */
 .btn {
   @apply px-4 py-2 bg-blue-600 text-white rounded;
 }
@@ -11,4 +10,5 @@
 /*
 
   npx tailwindcss -i ./src/assets/styles/input.css -o ./src/assets/styles/output.css --watch
+  npx tailwindcss -i ./src/assets/styles/input.css -o ./src/assets/styles/output.css
 */
