@@ -2,6 +2,7 @@ import Hello from "@/components/Hello";
 import Header from "@/components/layout/Header";
 import Menu from "@/components/layout/Menu";
 import WritingList from "@/components/WritingList";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -9,8 +10,9 @@ function App() {
       <Header />
       <Menu />
       <div>
-        <WritingList />
+        <Outlet />
       </div>
+      <div>{/* <WritingList /> */}</div>
     </div>
   );
 }

@@ -1,21 +1,42 @@
-export default function WritingList() {
+interface IWriting {
+  id: number;
+  title: string;
+  explanation: string;
+  createdAt: string;
+  user: string;
+}
+
+export default function WritingList({
+  id,
+  title,
+  explanation,
+  createdAt,
+  user,
+}: IWriting) {
   return (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5  gap-3">
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-        <li className="border border-gray-400 rounded-md">
-          <div>
-            <img src="" alt="" />
-            <div className="txt px-2">
-              <h4 className="title">제목</h4>
-              <p>설명글</p>
-            </div>
-            <div className="px-2">
-              <p>[Category] YYYY.MM.dd hh:mm</p>
-              <p>Writer</p>
-            </div>
+    <li className="border border-gray-400 rounded-md">
+      <div>
+        <div className="bg-gray-50 rounded-md thumb-area"></div>
+
+        <div className=" p-2">
+          <h4 className="text-xl text-lien-1">{title}</h4>
+
+          <p className="felx-1 text-lien-2 h-12 text-neutral-400">
+            {explanation}
+          </p>
+
+          <div className="pt-4">
+            <p className="text-gray-300 text-sm">{createdAt}</p>
           </div>
-        </li>
-      ))}
-    </ul>
+        </div>
+        <div className="flex p-1 border-t border-gray-300 px-2">
+          <p className="flex-1">{user}</p>
+          <div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </li>
   );
 }
