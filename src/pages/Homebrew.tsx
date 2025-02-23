@@ -1,4 +1,4 @@
-import WritingList from "@/components/WritingList";
+import List from "@/components/List";
 import { useState } from "react";
 
 interface IHomebrew {
@@ -49,19 +49,19 @@ export default function Homebrew() {
   const [homebrewList, setHomeBrewList] = useState<IHomebrew[]>([]);
 
   return (
-    <div>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3 max-w-7xl px-2 m-auto">
+    <>
+      <ul className="list-width grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3 max-w-7xl m-auto">
         {testData.map((item) => (
-          <WritingList
+          <List
             key={item.id}
             id={item.id}
             title={item.title}
             explanation={`[${item.category}] ${item.ingredient.toString()}`}
-            createdAt={item.createdAt.toLocaleDateString()}
+            dateAt={item.createdAt.toLocaleDateString()}
             user={item.user}
           />
         ))}
       </ul>
-    </div>
+    </>
   );
 }

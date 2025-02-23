@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 import dayjs from "dayjs";
 import Comment from "@/components/Comment";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeBrewDetail() {
   const userData = {
