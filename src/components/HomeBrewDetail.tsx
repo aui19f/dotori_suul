@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function HomeBrewDetail() {
   const userData = {
-    id: 20,
+    id: "20",
     nickname: "master",
     likes: { homebrew: [1, 2, 3] },
     bookmarks: { homebrew: [1, 5, 6] },
@@ -64,7 +64,7 @@ export default function HomeBrewDetail() {
     ],
     comment: [
       {
-        id: 11,
+        id: 14,
         user: 20,
         createdAt: new Date(),
         txt: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',

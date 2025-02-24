@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Homebrew /> },
           { path: "homebrew", element: <Homebrew /> },
-          { path: "homebrew/detail", element: <HomeBrewDetail /> },
+          { path: "homebrew/:id", element: <HomeBrewDetail /> },
         ],
       },
 
