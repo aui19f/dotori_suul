@@ -47,7 +47,7 @@ export default function Header({ isLogin }: { isLogin: boolean }) {
             onClick={userLogout}
             className="border border-gray-300 p-2 text-sm mx-1 rounded-md text-gray-600 hover:bg-gray-200"
           >
-            로그아웃
+            로그아웃1
           </button>
         )}
       </div>
