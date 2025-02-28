@@ -14,13 +14,13 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_API_PROJECTID,
   storageBucket: import.meta.env.VITE_API_STORAGEBUCKET,
   messagingSenderId: import.meta.env.VITE_API_MESSAGINGSENDERID,
-  appId: import.meta.env.VITE_API_MEASUREMENTID,
-  measurementId: import.meta.env.VITE_API_APPID,
+  appId: import.meta.env.VITE_API_APPID,
+  measurementId: import.meta.env.VITE_API_MEASUREMENTID,
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
