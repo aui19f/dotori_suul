@@ -1,12 +1,11 @@
 /* src/index.css */
 @tailwind base;
 @tailwind components;
-body,
+/* body,
 #root {
-  /* height: calc(100% - 64px); */
   width: 100vw;
   height: 100vh;
-}
+} */
 
 input,
 select,

@@ -25,7 +25,7 @@ export default function Festival() {
   ];
   return (
     <div>
-      <ul className="grid grid-cols-1 list-hight sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3 max-w-7xl px-2 m-auto">
+      <ul className="grid grid-cols-1 list-hight sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3 max-w-7xl m-auto">
         {data_festival.map((festival) => (
           <List
             key={festival.id}
