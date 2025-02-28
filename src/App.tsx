@@ -5,9 +5,7 @@ import { Outlet } from "react-router-dom";
 import { useLoadingStore } from "@/stores/loadingStore";
 
 function App() {
-  console.log("-app-");
   const { user, initLoading } = useAuth();
-  console.log("user", user);
   const isLoading = useLoadingStore((state) => state.isLoading);
 
   return (
