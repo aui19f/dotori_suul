@@ -22,4 +22,4 @@ const useAuth = () => {
 
   return { user, initLoading };
 };
-export default useAuth;
+export { useAuth };

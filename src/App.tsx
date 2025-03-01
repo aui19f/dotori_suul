@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Loading from "@/components/layout/Loading";
-import useAuth from "@/custom/UseAuth";
+import { useAuth } from "@/custom/UseAuth";
 import { Outlet } from "react-router-dom";
 import { useLoadingStore } from "@/stores/loadingStore";
 
