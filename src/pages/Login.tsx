@@ -47,7 +47,7 @@ export default function Login() {
             <img className="size-16" src={logo} alt="Logo" />
             <h1 className="text-lg">로그인</h1>
           </div>
-          <form onClick={handleSubmit(onSubmit)} className="flex flex-col">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <input
               type="text"
               {...register("email", {
