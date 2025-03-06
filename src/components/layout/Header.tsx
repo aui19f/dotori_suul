@@ -1,5 +1,9 @@
 import logo from "@/assets/images/logo.png";
 import Menu from "@/components/layout/Menu";
+
+import i_login from "@/assets/images/header_logout.png";
+import i_menu from "@/assets/images/menu.png";
+
 import { auth } from "@/fbase";
 
 import { useNavigation } from "@/utils/navigation";
@@ -21,10 +25,8 @@ export default function Header({ isLogin }: { isLogin: boolean }) {
       });
   };
   return (
-    <div className="flex items-center  bg-gray-100 border-b border-b-gray-200 solid fixed left-0 top-0 right-0">
-      <div className="size-16 p-1">
-        <img src={logo} alt="logo" className="h-full" />
-      </div>
+    <div className="flex items-center border-b border-b-gray-200 solid fixed left-0 top-0 right-0 h-14">
+      <img src={logo} alt="logo" className="size-12" />
 
       <Menu />
       <div className="m-auto">
@@ -43,12 +45,17 @@ export default function Header({ isLogin }: { isLogin: boolean }) {
             로그인
           </button>
         ) : (
-          <button
-            onClick={userLogout}
-            className="border border-gray-300 p-2 text-sm mx-1 rounded-md text-gray-600 hover:bg-gray-200"
-          >
-            로그아웃
+          <button className="p-2 text-sm mx-1 rounded-md text-gray-600 hover:bg-gray-200">
+            <img src={i_menu} alt="" className="size-full" />
           </button>
+
+          // <button
+          //   onClick={userLogout}
+          //   className="p-2 text-sm mx-1 rounded-md text-gray-600 hover:bg-gray-200 border-0 md:border md:border-gray-300"
+          // >
+          //   <img src={i_logout} alt="" className="md:hidden size-full" />
+          //   <span className="hidden md:block">로그아웃</span>
+          // </button>
         )}
       </div>
     </div>

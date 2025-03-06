@@ -53,18 +53,21 @@ export default function Homebrew() {
     navi(`homebrew/${id}`);
   };
   return (
-    <ul className="list-width grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3 max-w-7xl m-auto">
-      {testData.map((item) => (
-        <li key={item.id} onClick={() => pageMove(item.id)}>
-          <List
-            id={item.id}
-            title={item.title}
-            explanation={`[${item.category}] ${item.ingredient.toString()}`}
-            dateAt={item.createdAt.toLocaleDateString()}
-            user={item.user}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="list-width grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 max-w-7xl m-auto p-2">
+        {testData.map((item) => (
+          <li key={item.id} onClick={() => pageMove(item.id)}>
+            <List
+              id={item.id}
+              title={item.title}
+              explanation={`[${item.category}] ${item.ingredient.toString()}`}
+              dateAt={item.createdAt.toLocaleDateString()}
+              user={item.user}
+            />
+          </li>
+        ))}
+      </ul>
+      <div className="fixed bottom-2 right-2 size-10 bg-blue-400 rounded-full"></div>
+    </>
   );
 }

@@ -49,8 +49,8 @@ export default function Suul() {
     navi(`${id}`);
   };
   return (
-    <div>
-      <ul className="list-square max-w-7xl m-auto grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 ">
+    <>
+      <ul className="list-square max-w-7xl m-auto grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 p-2">
         {data_suul.map((suul) => (
           <li key={suul.id} onClick={() => detail(suul.id)}>
             <List
@@ -64,6 +64,6 @@ export default function Suul() {
         ))}
       </ul>
       <Outlet />
-    </div>
+    </>
   );
 }

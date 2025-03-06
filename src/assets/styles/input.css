@@ -9,44 +9,60 @@
 
 input,
 select,
-button {
-  height: 40px;
+button,
+textarea {
   border: 1px solid #999999;
   padding-left: 8px;
   padding-right: 8px;
   color: #999999;
+  border-radius: 4px;
 }
+input,
+select,
+button {
+  height: 40px;
+}
+textarea {
+  padding: 8px;
+}
+
 /*  
 <label className="input-checkbox"> Three
   <input type="checkbox" />
   <span className="checkmark"></span>
 </label> 
+--
+<label className="input-radio">
+  One
+  <input type="radio" name="radio" />
+  <span className="checkmark"></span>
+</label>
 */
-.input-checkbox {
+
+.input-checkbox,
+.input-radio {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   color: #999999;
   padding: 8px 0;
   display: block;
   position: relative;
   padding-left: 32px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
   input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-    height: 0;
-    width: 0;
   }
   .checkmark {
     position: absolute;
-    top: 8px;
-    left: 0;
     height: 24px;
     width: 24px;
     background-color: #eee;
+    border-radius: 4px;
+    top: 8px;
+    left: 0;
     &:after {
       content: "";
       position: absolute;
@@ -59,6 +75,14 @@ button {
   input:checked ~ .checkmark:after {
     display: block;
   }
+}
+
+.input-checkbox {
+  input {
+    height: 0;
+    width: 0;
+  }
+
   .checkmark:after {
     left: 8px;
     top: 1px;
@@ -69,6 +93,20 @@ button {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+}
+
+.input-radio {
+  .checkmark {
+    border-radius: 50%;
+  }
+  .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
   }
 }
 

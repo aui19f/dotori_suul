@@ -1,3 +1,4 @@
+import { Writing } from "@/components/Writing";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,10 +22,15 @@ export const useNavigation = () => {
     navi(localStorage.getItem("backUrl") || "/");
   };
 
+  const navigateToCustem = (url: string): void => {
+    navi(url);
+  };
+
   return {
     navigateToHome,
     navigateToLogin,
     navigateToCreateAccount,
     navigateToBack,
+    navigateToCustem,
   };
 };

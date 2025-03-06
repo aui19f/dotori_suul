@@ -1,10 +1,15 @@
 import App from "@/App";
+import AdminBrewery from "@/components/admin/Brewery";
+import AdminDashBoard from "@/components/AdminDashBoard";
 import BreweryDetail from "@/components/BreweryDetail";
 import BreweryInformation from "@/components/BreweryInfo";
 import BreweryProduct from "@/components/BreweryProduct";
 import BreweryReview from "@/components/BreweryReview";
 import HomeBrewDetail from "@/components/HomeBrewDetail";
 import SuulDetail from "@/components/SuulDetail";
+import Writing from "@/components/Writing";
+import WritingList from "@/components/WritingList";
+import Admin from "@/pages/Admin";
 import Brewery from "@/pages/Brewery";
 import CreateAccount from "@/pages/CreateAccount";
 import Festival from "@/pages/Festival";
@@ -51,6 +56,22 @@ const router = createBrowserRouter([
       },
       { path: "festival", element: <Festival /> },
       { path: "intro", element: <Introduction /> },
+
+      {
+        path: "admin",
+        element: <Admin />,
+        children: [
+          { path: "", element: <AdminDashBoard /> },
+          {
+            path: "writing/:type",
+            element: <Writing />,
+          },
+          {
+            path: "writing/list/:type",
+            element: <WritingList />,
+          },
+        ],
+      },
     ],
   },
   {

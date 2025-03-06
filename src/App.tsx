@@ -13,10 +13,10 @@ function App() {
       {initLoading ? (
         <Loading />
       ) : (
-        <div>
+        <div className="flex h-screen ">
           {isLoading && <Loading />}
           <Header isLogin={user === null} />
-          <div className="mt-16 h-[calc(100%-64px)] p-2 ">
+          <div className="flex-1 w-screen h-full pt-14">
             <Outlet />
           </div>
         </div>

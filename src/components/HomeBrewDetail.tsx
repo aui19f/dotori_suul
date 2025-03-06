@@ -132,7 +132,7 @@ export default function HomeBrewDetail() {
   }, []);
 
   return (
-    <div className="max-w-4xl m-auto px-8 py-2">
+    <div className="max-w-4xl m-auto">
       <div className="border-b border-b-gray-200 pb-8">
         <h2 className="text-4xl">{data.title}</h2>
         <div className="flex mt-2 ">
