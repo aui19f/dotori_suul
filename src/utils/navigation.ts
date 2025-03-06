@@ -26,11 +26,16 @@ export const useNavigation = () => {
     navi(url);
   };
 
+  const navigateHistoryBack = () => {
+    navi(-1);
+  };
+
   return {
     navigateToHome,
     navigateToLogin,
     navigateToCreateAccount,
     navigateToBack,
     navigateToCustem,
+    navigateHistoryBack,
   };
 };

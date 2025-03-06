@@ -3,11 +3,11 @@ import Loading from "@/components/layout/Loading";
 import { useAuth } from "@/custom/UseAuth";
 import { Outlet } from "react-router-dom";
 import { useLoadingStore } from "@/stores/loadingStore";
+import { useEffect, useState } from "react";
 
 function App() {
   const { user, initLoading } = useAuth();
   const isLoading = useLoadingStore((state) => state.isLoading);
-
   return (
     <>
       {initLoading ? (

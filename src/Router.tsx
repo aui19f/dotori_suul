@@ -16,6 +16,7 @@ import Festival from "@/pages/Festival";
 import Homebrew from "@/pages/Homebrew";
 import Introduction from "@/pages/Introduction";
 import Login from "@/pages/Login";
+import MyPage from "@/pages/MyPage";
 import Suul from "@/pages/Suul";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -56,6 +57,8 @@ const router = createBrowserRouter([
       },
       { path: "festival", element: <Festival /> },
       { path: "intro", element: <Introduction /> },
+
+      { path: "mypage", element: <MyPage /> },
 
       {
         path: "admin",

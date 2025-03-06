@@ -1,9 +1,12 @@
 import BreweryDetail from "@/components/BreweryDetail";
 import List from "@/components/List";
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Brewery() {
+  const [isModal, setIsModal] = useState(false);
+  const location = useLocation();
+
   const navi = useNavigate();
 
   const breweryData = [
@@ -42,20 +45,38 @@ export default function Brewery() {
       visitingType: "상시방분",
     },
   ];
+
   const onclick = (id: number) => {
-    console.log("[id] ", id);
     navi(`${id}/information`);
+    if (window.innerWidth < 768) {
+      setIsModal(true);
+      console.log("모바일에서는 모달 -> 스크롤닫기");
+    } else {
+    }
   };
 
   useEffect(() => {
-    document.documentElement.style.setProperty("overflow", "hidden");
+    //
+    if (location.pathname === "/brewery") {
+      setIsModal(false);
+    }
+    if (window.innerWidth > 768) {
+      document.documentElement.style.setProperty("overflow", "hidden");
+    }
+
     return () => {
+      console.log("return");
       document.documentElement.style.setProperty("overflow", "auto");
     };
-  }, []);
+  }, [location]);
   return (
     <div className="flex h-full">
-      <div className="p-2 w-96 pr-4 border-r border-gray-50 overflow-auto">
+      <div
+        className="w-screen md:w-96 p-2 border-r border-gray-50 md:overflow-auto"
+        style={{
+          overflow: isModal ? "hidden" : "auto",
+        }}
+      >
         <div className="flex flex-col mb-4">
           <select className="mb-2">
             <option value="">전체</option>
@@ -94,10 +115,17 @@ export default function Brewery() {
         </ul>
       </div>
 
-      <div className="flex-1 py-2 px-4  overflow-auto">
-        {/* <BreweryDetail /> */}
+      <div className="hidden md:block flex-1 overflow-auto">
         <Outlet />
       </div>
+
+      {isModal ? (
+        <div className=" w-screen h-screen fixed left-0 top-0 bg-black bg-opacity-50 flex items-center justify-center md:hidden">
+          <div className="bg-white shadow-md rounded-md max-w-4xl h-full overflow-hidden">
+            <Outlet />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -10,22 +10,48 @@ import { useNavigation } from "@/utils/navigation";
 import { signOut } from "firebase/auth";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 export default function Header({ isLogin }: { isLogin: boolean }) {
-  const location = useLocation();
-  const { navigateToLogin } = useNavigation();
+  const [scrollingDown, setScrollingDown] = useState(false);
+  let lastScrollTop = 0;
 
+  const location = useLocation();
+  const { navigateToLogin, navigateToCustem } = useNavigation();
   const userLogin = () => {
     navigateToLogin(location.pathname);
   };
-  const userLogout = () => {
-    signOut(auth)
-      .then(() => {})
-      .catch((error) => {
-        console.log("logout error");
-      });
-  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (currentScroll > lastScrollTop) {
+        setScrollingDown(true); // 스크롤을 내렸다면
+      } else {
+        setScrollingDown(false); // 스크롤을 올렸다면
+      }
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // 스크롤이 0보다 작지 않게
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="flex items-center border-b border-b-gray-200 solid fixed left-0 top-0 right-0 h-14">
+    <div
+      className="flex items-center border-b border-b-gray-200 solid fixed left-0 right-0 h-14
+      transition-all duration-300 ease-in-out
+      bg-white
+      "
+      style={{
+        top: scrollingDown ? "-56px" : "0",
+      }}
+    >
       <img src={logo} alt="logo" className="size-12" />
 
       <Menu />
@@ -45,7 +71,10 @@ export default function Header({ isLogin }: { isLogin: boolean }) {
             로그인
           </button>
         ) : (
-          <button className="p-2 text-sm mx-1 rounded-md text-gray-600 hover:bg-gray-200">
+          <button
+            className="p-2 mx-1 border-0"
+            onClick={() => navigateToCustem("/mypage")}
+          >
             <img src={i_menu} alt="" className="size-full" />
           </button>
 

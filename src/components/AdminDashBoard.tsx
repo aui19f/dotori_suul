@@ -6,6 +6,10 @@ import i_rating from "@/assets/images/rating.png";
 import i_comments from "@/assets/images/comments.png";
 import { useNavigation } from "@/utils/navigation";
 
+import i_group from "@/assets/images/group.png";
+import i_decrease from "@/assets/images/decrease.png";
+import i_increase from "@/assets/images/increase.png";
+
 // dashboard, 양조장, 우리술, 대축제 업데이트작성,
 export default function AdminDashBoard() {
   const { navigateToCustem } = useNavigation();
@@ -17,6 +21,35 @@ export default function AdminDashBoard() {
   };
   return (
     <div className="grid md:grid-cols-3 gap-4">
+      <div className="bg-gray-100 p-4 rounded-md shadow-md">
+        <div className="flex items-center mb-4">
+          <p className="font-bold  flex-1">회원</p>
+          <button
+            onClick={() => list("brewery")}
+            className="text-sm h-fit p-1 border border-gray-200 bg-gray-200 rounded-md text-gray-400 mr-1"
+          >
+            전체보기
+          </button>
+        </div>
+        <ul className="border-b-gray-400">
+          <li className="flex items-center border-b border-b-100 py-2">
+            <img src={i_group} alt="" className="size-4" />
+            <p className="flex-1 mx-2 text-sm">가입자수</p>
+            <p>N</p>
+          </li>
+          <li className="flex items-center border-b border-b-100 py-2">
+            <img src={i_decrease} alt="" className="size-4" />
+            <p className="flex-1 mx-2 text-sm">증가(일주일)</p>
+            <p>N</p>
+          </li>
+          <li className="flex items-center py-2">
+            <img src={i_increase} alt="" className="size-4" />
+            <p className="flex-1 mx-2 text-sm">감소(일주일)</p>
+            <p>N</p>
+          </li>
+        </ul>
+      </div>
+
       <div className="bg-gray-100 p-4 rounded-md shadow-md">
         <div className="flex items-center mb-4">
           <p className="font-bold  flex-1">양조장</p>
