@@ -1028,10 +1028,6 @@ ul.text-lien-2 .explanation {
   width: 2rem;
 }
 
-.w-96 {
-  width: 24rem;
-}
-
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
@@ -1145,10 +1141,6 @@ ul.text-lien-2 .explanation {
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-1 {
-  gap: 0.25rem;
 }
 
 .overflow-auto {
@@ -1414,10 +1406,6 @@ ul.text-lien-2 .explanation {
   padding-right: 0.25rem;
 }
 
-.pr-4 {
-  padding-right: 1rem;
-}
-
 .pt-14 {
   padding-top: 3.5rem;
 }
@@ -1437,11 +1425,6 @@ ul.text-lien-2 .explanation {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
 }
 
 .text-4xl {
@@ -1597,18 +1580,9 @@ ul.text-lien-2 .explanation {
     display: none;
   }
 
-  .md\:size-auto {
-    width: auto;
-    height: auto;
-  }
-
   .md\:size-8 {
     width: 2rem;
     height: 2rem;
-  }
-
-  .md\:h-full {
-    height: 100%;
   }
 
   .md\:w-1\/4 {
@@ -1619,24 +1593,12 @@ ul.text-lien-2 .explanation {
     width: 75%;
   }
 
-  .md\:w-40 {
-    width: 10rem;
-  }
-
-  .md\:w-auto {
-    width: auto;
-  }
-
   .md\:w-96 {
     width: 24rem;
   }
 
-  .md\:max-w-4xl {
-    max-width: 56rem;
-  }
-
-  .md\:flex-1 {
-    flex: 1 1 0%;
+  .md\:w-auto {
+    width: auto;
   }
 
   .md\:grid-cols-2 {

@@ -19,7 +19,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "script": true
   },
   "include": ["src", "**/*.ts", "**/*.tsx"]
 }
