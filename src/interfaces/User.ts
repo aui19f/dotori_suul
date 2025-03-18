@@ -9,6 +9,8 @@ export interface ICreateAccountForm {
 export interface ILoginForm {
   email: string;
   password: string;
+
+  extraError?: string;
 }
 
 export interface IUserForm {

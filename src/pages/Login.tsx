@@ -4,8 +4,9 @@ import facebook from "@/assets/images/facebook.png";
 import naver from "@/assets/images/naver.png";
 import logo from "@/assets/images/logo.png";
 
-import { useNavigation } from "@/utils/navigation";
 import React from "react";
+import { useNavigation } from "@/utils/navigation";
+
 import { useForm } from "react-hook-form";
 import { ILoginForm } from "@/interfaces/User";
 
@@ -15,7 +16,7 @@ import { auth } from "@/fbase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
-  const { navigateToBack, navigateToCreateAccount } = useNavigation();
+  // const { navigateToBack, navigateToCreateAccount } = useNavigation();
   const isLoading = useLoadingStore((state) => state.isLoading);
   const setLoading = useLoadingStore((state) => state.setLoading);
 
@@ -24,17 +25,23 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors,
   } = useForm<ILoginForm>();
+
+  const resetError = () => {
+    clearErrors("extraError");
+  };
 
   const onSubmit = async ({ email, password }: ILoginForm) => {
     try {
       setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
-      setLoading(false);
-      navigateToBack();
+      const result = await signInWithEmailAndPassword(auth, email, password);
+
+      // navigateToBack();
     } catch (error) {
-      console.log("[[[Error]]]", error);
+      setError("extraError", { message: "Server offline." });
     }
+    setLoading(false);
   };
 
   return (
@@ -52,6 +59,7 @@ export default function Login() {
               type="text"
               {...register("email", {
                 required: "필수입력사항입니다.",
+                onChange: resetError,
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
                   message: "이메일 형식이 아닙니다.",
@@ -69,7 +77,10 @@ export default function Login() {
 
             <input
               type="password"
-              {...register("password", { required: "필수입력사항입니다." })}
+              {...register("password", {
+                required: "필수입력사항입니다.",
+                onChange: resetError,
+              })}
               placeholder="비밀번호"
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
             />
@@ -79,8 +90,15 @@ export default function Login() {
                 {errors.password?.message}
               </p>
             )}
-
-            <button className="h-12 bg-blue-600 text-white">로그인</button>
+            {errors?.extraError?.message ? (
+              <p>아이디 또는 비밀번호를 확인해주세요.</p>
+            ) : null}
+            <button
+              data-testid="login-button"
+              className="h-12 bg-blue-600 text-white"
+            >
+              로그인
+            </button>
           </form>
 
           <div className="my-8 flex items-center">
@@ -106,10 +124,8 @@ export default function Login() {
 
           <div className="flex justify-center mt-8">
             <p className="text-sm mr-2">계정이 없나요? </p>
-            <p
-              onClick={navigateToCreateAccount}
-              className="text-sm underline cursor-pointer hover:text-blue-600"
-            >
+            <p className="text-sm underline cursor-pointer hover:text-blue-600">
+              {/* onClick={navigateToCreateAccount} */}
               회원가입
             </p>
           </div>
