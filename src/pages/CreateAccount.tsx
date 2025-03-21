@@ -49,8 +49,9 @@ export default function CreateAccount() {
         password
       );
       const userData = userCredential.user;
+      const { uid } = userData;
 
-      await setDoc(doc(db, "user", uuidv4()), {
+      await setDoc(doc(db, "user", uid), {
         email,
         nicakname: email.split("@")[0],
         like: {

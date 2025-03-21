@@ -12,6 +12,7 @@ interface IWriting {
   dateAt?: string;
   user?: string;
   tag?: string;
+  tagName?: string;
 }
 
 export default function List({
@@ -22,6 +23,7 @@ export default function List({
   user,
   tag,
   like,
+  tagName,
 }: IWriting) {
   return (
     <div className="border border-gray-200 shadow-md">
@@ -57,11 +59,11 @@ export default function List({
       {tag && (
         <div className="flex p-2 ">
           <div className="border rounded-xl bg-blue-400 px-2 py-1 w-fit">
-            <p className="text-sm text-white">상시방문</p>
+            <p className="text-sm text-white">{tagName}</p>
           </div>
-          <div className="border rounded-xl border-blue-400 px-2 py-1 w-fit">
+          {/* <div className="border rounded-xl border-blue-400 px-2 py-1 w-fit">
             <p className="text-sm text-blue-400">예약방문</p>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

@@ -7,24 +7,34 @@ import DaumPostcode from "react-daum-postcode";
 
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+export interface IDaumAddress {
+  sido: string;
+  address: string;
+  fullAddress: string;
+}
+interface ChildComponentProps {
+  changeAddres: ({ sido, address, fullAddress }: IDaumAddress) => void;
+}
 
-export default function InputAddress() {
+export default function InputAddress({ changeAddres }: ChildComponentProps) {
   let scriptUrl;
   const open = useDaumPostcodePopup(scriptUrl);
 
   const handleComplete = (data) => {
+    const { sido, address, buildingName, addressType, bname } = data;
     let fullAddress = data.address;
     let extraAddress = "";
 
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
+    if (addressType === "R") {
+      if (bname !== "") {
+        extraAddress += bname;
       }
-      if (data.buildingName !== "") {
+      if (buildingName !== "") {
         extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== "" ? `, ${buildingName}` : buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+      changeAddres({ sido, address, fullAddress });
     }
   };
 

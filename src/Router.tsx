@@ -5,6 +5,7 @@ import BreweryDetail from "@/components/BreweryDetail";
 import BreweryInformation from "@/components/BreweryInfo";
 import BreweryProduct from "@/components/BreweryProduct";
 import BreweryReview from "@/components/BreweryReview";
+import WritingBrewery from "@/components/forms/WritingBrewery";
 import HomeBrewDetail from "@/components/HomeBrewDetail";
 import SuulDetail from "@/components/SuulDetail";
 import Writing from "@/components/Writing";
@@ -66,12 +67,18 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <AdminDashBoard /> },
           {
-            path: "writing/:type",
+            path: "writing",
             element: <Writing />,
-          },
-          {
-            path: "writing/list/:type",
-            element: <WritingList />,
+            children: [
+              {
+                path: "list/:menu",
+                element: <WritingList />,
+              },
+              {
+                path: "brewery",
+                element: <WritingBrewery />,
+              },
+            ],
           },
         ],
       },
