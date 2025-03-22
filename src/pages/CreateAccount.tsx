@@ -1,9 +1,9 @@
-import kakao from "@/assets/images/kakaotalk.png";
-import google from "@/assets/images/google.png";
-import facebook from "@/assets/images/facebook.png";
-import naver from "@/assets/images/naver.png";
+// import kakao from "@/assets/images/kakaotalk.png";
+// import google from "@/assets/images/google.png";
+// import facebook from "@/assets/images/facebook.png";
+// import naver from "@/assets/images/naver.png";
 import logo from "@/assets/images/logo.png";
-import { useEffect, useState } from "react";
+
 import { useNavigation } from "@/utils/navigation";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
@@ -17,16 +17,35 @@ import { auth, db } from "@/fbase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
+import * as Sentry from "@sentry/react";
+import { useEffect } from "react";
+import { initAuthListener, useLoginStore } from "@/stores/loginStore";
+
 export default function CreateAccount() {
-  const { navigateToLogin, navigateToBack } = useNavigation();
-  const setLoading = useLoadingStore((state) => state.setLoading);
-  const isLoading = useLoadingStore((state) => state.isLoading);
+  const { navigateToLogin, navigateToHome } = useNavigation();
+  const { isLoading, setLoading } = useLoadingStore();
+  const { isAuthenticated } = useLoginStore();
+  useEffect(() => {
+    initAuthListener();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigateToHome();
+    }
+  }, [isAuthenticated]); // user 상태가 변경될 때마다 실행
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors,
   } = useForm<ICreateAccountForm>();
+
+  const resetError = () => {
+    clearErrors("extraError");
+  };
 
   const onSubmit = async ({
     email,
@@ -43,27 +62,13 @@ export default function CreateAccount() {
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userData = userCredential.user;
+      const {
+        user: { uid },
+      } = await createUserWithEmailAndPassword(auth, email, password);
 
-      await setDoc(doc(db, "user", uuidv4()), {
+      await setDoc(doc(db, "user", uid), {
         email,
-        nicakname: email.split("@")[0],
-        like: {
-          homebrew: [],
-          brewery: [],
-          suul: [],
-        },
-        bookmark: {
-          homebrew: [],
-          brewery: [],
-          suul: [],
-          festival: [],
-        },
+        nicakname: email.split("@")[0], // 임시용
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime(),
         role: UserRole.Guest,
@@ -72,12 +77,26 @@ export default function CreateAccount() {
       alert("가입이 완료되었습니다.");
 
       setLoading(false);
-      navigateToBack();
+      moveLoginPage();
     } catch (error) {
+      setLoading(false);
+      setError("extraError", { message: "아이디, 비밀번호를 확인해주세요." });
       if (error instanceof FirebaseError) {
+        if (error.code !== "auth/email-already-in-use") {
+          Sentry.captureException(`FirebaseError ${error}`);
+        }
         console.log(error.code, error.message);
+      } else {
+        Sentry.captureException(`회원가입 error 발생: ${error}`);
       }
     }
+  };
+
+  const moveLoginPage = () => {
+    const backUrl = localStorage.getItem("backUrl")
+      ? localStorage.getItem("backUrl")
+      : "/";
+    navigateToLogin(String(backUrl));
   };
 
   return (
@@ -90,7 +109,7 @@ export default function CreateAccount() {
         >
           <div className="flex items-end mb-4">
             <img className="size-16" src={logo} alt="Logo" />
-            <h1 className="text-lg">회원가1입</h1>
+            <h1 className="text-lg">회원가입</h1>
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
             <input
@@ -99,6 +118,7 @@ export default function CreateAccount() {
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
               {...register("email", {
                 required: "필수입력사항입니다.",
+                onChange: resetError,
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
                   message: "이메일 형식이 아닙니다.",
@@ -119,6 +139,7 @@ export default function CreateAccount() {
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
               {...register("password", {
                 required: "필수입력사항입니다.",
+                onChange: resetError,
                 minLength: {
                   value: 8,
                   message: "비밀번호는 8자 이상이여야 합니다,",
@@ -139,6 +160,7 @@ export default function CreateAccount() {
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
               {...register("password2", {
                 required: "필수입력사항입니다.",
+                onChange: resetError,
               })}
             />
             {errors.password2 && (
@@ -150,13 +172,13 @@ export default function CreateAccount() {
             <button className="h-12 bg-blue-600 text-white">회원가입</button>
           </form>
 
-          <div className="my-8 flex items-center">
+          {/* <div className="my-8 flex items-center">
             <div className="flex-1  border-t border-gray-400  mr-1"></div>
             <p className="text-gray-400">또는</p>
             <div className="flex-1  border-t border-gray-400  ml-1"></div>
-          </div>
+          </div> */}
 
-          <ul className="grid grid-cols-4 gap-8">
+          {/* <ul className="grid grid-cols-4 gap-8">
             <li>
               <img className="size-8 m-auto" src={kakao} alt="Logo" />
             </li>
@@ -169,12 +191,16 @@ export default function CreateAccount() {
             <li>
               <img className="size-8 m-auto" src={naver} alt="Logo" />
             </li>
-          </ul>
-
+          </ul> */}
+          {errors?.extraError?.message ? (
+            <p className="my-2 text-sm text-red-600 text-center">
+              아이디 또는 비밀번호를 확인해주세요.
+            </p>
+          ) : null}
           <div className="flex justify-center mt-8">
             <p className="text-sm mr-2">이미 가입한 회원이신가요? </p>
             <p
-              onClick={navigateToLogin}
+              onClick={moveLoginPage}
               className="text-sm underline cursor-pointer hover:text-blue-600"
             >
               로그인

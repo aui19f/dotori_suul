@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@firebase/testing": "^0.20.11",
+    "@sentry/react": "^9.8.0",
+    "@sentry/tracing": "^7.120.3",
     "@tailwindcss/postcss": "^4.0.6",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-query": "^5.66.10",

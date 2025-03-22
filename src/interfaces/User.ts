@@ -4,6 +4,7 @@ export interface ICreateAccountForm {
   email: string;
   password: string;
   password2: string;
+  extraError?: string;
 }
 
 export interface ILoginForm {
@@ -29,5 +30,11 @@ export interface IUserForm {
   };
   createdAt: string;
   updatedAt: string;
+  role: UserRole;
+}
+
+export interface ILoginUser {
+  email: string;
+  nickname: string;
   role: UserRole;
 }

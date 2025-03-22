@@ -4,7 +4,7 @@ import facebook from "@/assets/images/facebook.png";
 import naver from "@/assets/images/naver.png";
 import logo from "@/assets/images/logo.png";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@/utils/navigation";
 
 import { useForm } from "react-hook-form";
@@ -12,13 +12,27 @@ import { ILoginForm } from "@/interfaces/User";
 
 import { useLoadingStore } from "@/stores/loadingStore";
 import Loading from "@/components/layout/Loading";
-import { auth } from "@/fbase";
+import { auth, db } from "@/fbase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import * as Sentry from "@sentry/react";
+import { FirebaseError } from "firebase/app";
+import { useLoginStore, initAuthListener } from "@/stores/loginStore";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
-  // const { navigateToBack, navigateToCreateAccount } = useNavigation();
-  const isLoading = useLoadingStore((state) => state.isLoading);
-  const setLoading = useLoadingStore((state) => state.setLoading);
+  const { navigateToBack, navigateToCreateAccount } = useNavigation();
+  const { isLoading, setLoading } = useLoadingStore();
+  const { isAuthenticated } = useLoginStore();
+
+  useEffect(() => {
+    initAuthListener();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigateToBack();
+    }
+  }, [isAuthenticated]); // user 상태가 변경될 때마다 실행
 
   const {
     register,
@@ -35,11 +49,21 @@ export default function Login() {
   const onSubmit = async ({ email, password }: ILoginForm) => {
     try {
       setLoading(true);
-      const result = await signInWithEmailAndPassword(auth, email, password);
+      const {
+        user: { uid },
+      } = await signInWithEmailAndPassword(auth, email, password);
 
-      // navigateToBack();
+      navigateToBack();
     } catch (error) {
-      setError("extraError", { message: "Server offline." });
+      if (error instanceof FirebaseError) {
+        setError("extraError", {
+          message: "아이디와 비밀번호를 확인해주세요.",
+        });
+        console.log("Login Error: ", error);
+      } else {
+        setError("extraError", { message: "-" });
+        Sentry.captureException(`로그인 error 발생: ${error}`);
+      }
     }
     setLoading(false);
   };
@@ -101,13 +125,13 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="my-8 flex items-center">
+          {/* <div className="my-8 flex items-center">
             <div className="flex-1  border-t border-gray-400  mr-1"></div>
             <p className="text-gray-400">또는</p>
             <div className="flex-1  border-t border-gray-400  ml-1"></div>
-          </div>
+          </div> */}
 
-          <ul className="grid grid-cols-4 gap-8">
+          {/* <ul className="grid grid-cols-4 gap-8">
             <li>
               <img className="size-8 m-auto" src={kakao} alt="Logo" />
             </li>
@@ -120,12 +144,15 @@ export default function Login() {
             <li>
               <img className="size-8 m-auto" src={naver} alt="Logo" />
             </li>
-          </ul>
+          </ul> */}
 
           <div className="flex justify-center mt-8">
             <p className="text-sm mr-2">계정이 없나요? </p>
-            <p className="text-sm underline cursor-pointer hover:text-blue-600">
-              {/* onClick={navigateToCreateAccount} */}
+            <p
+              onClick={navigateToCreateAccount}
+              className="text-sm underline cursor-pointer hover:text-blue-600"
+            >
+              {/**/}
               회원가입
             </p>
           </div>
