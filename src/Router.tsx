@@ -1,5 +1,5 @@
 import App from "@/App";
-import AdminBrewery from "@/components/admin/Brewery";
+
 import AdminDashBoard from "@/components/AdminDashBoard";
 import BreweryDetail from "@/components/BreweryDetail";
 import BreweryInformation from "@/components/BreweryInfo";
@@ -19,7 +19,22 @@ import Introduction from "@/pages/Introduction";
 import Login from "@/pages/Login";
 import MyPage from "@/pages/MyPage";
 import Suul from "@/pages/Suul";
-import { createBrowserRouter } from "react-router-dom";
+import { useLoginStore } from "@/stores/loginStore";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+
+const ProtectedRoute = ({ element, requiredRole }) => {
+  const { user } = useLoginStore();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  if (requiredRole) {
+    if (user.role !== requiredRole) {
+      // 권한이 없는 사용자
+      return <Navigate to="/" />;
+    }
+  }
+  return element;
+};
 
 const router = createBrowserRouter([
   {
@@ -59,11 +74,15 @@ const router = createBrowserRouter([
       { path: "festival", element: <Festival /> },
       { path: "intro", element: <Introduction /> },
 
-      { path: "mypage", element: <MyPage /> },
+      {
+        path: "mypage",
+        element: <ProtectedRoute element={<MyPage />} />,
+      },
+      { path: "mypage/list/:menu", element: <WritingList /> },
 
       {
         path: "admin",
-        element: <Admin />,
+        element: <ProtectedRoute element={<Admin />} requiredRole="admin" />,
         children: [
           { path: "", element: <AdminDashBoard /> },
           {
@@ -93,5 +112,14 @@ const router = createBrowserRouter([
     element: <Login />,
   },
 ]);
-
+// const Admin = () => {
+//   //
+//   // if (!user) {
+//   //   window.location.href = "/login";
+//   // }
+//   // if (user?.role !== "admin") {
+//   //   window.location.href = "/mypage";
+//   // }
+//   return <Admin />;
+// };
 export default router;

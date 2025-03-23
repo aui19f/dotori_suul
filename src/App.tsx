@@ -1,15 +1,21 @@
 import Header from "@/components/layout/Header";
 import Loading from "@/components/layout/Loading";
-import { useAuth } from "@/custom/UseAuth";
+
 import { Outlet } from "react-router-dom";
 import { useLoadingStore } from "@/stores/loadingStore";
+import { useLoginStore, initAuthListener } from "@/stores/loginStore";
+import { useEffect } from "react";
 
 function App() {
-  const { user, initLoading } = useAuth();
-  const isLoading = useLoadingStore((state) => state.isLoading);
+  const { user, isAuthenticated } = useLoginStore();
+  const { isLoading } = useLoadingStore();
+  useEffect(() => {
+    initAuthListener();
+  }, []);
+
   return (
     <>
-      {initLoading ? (
+      {isAuthenticated === null ? (
         <Loading />
       ) : (
         <div className="flex h-screen ">
