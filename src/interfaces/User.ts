@@ -16,7 +16,7 @@ export interface ILoginForm {
 
 export interface IUserForm {
   email: string;
-  nicakname: string;
+  nickname: string;
   like: {
     homebrew: string[];
     brewery: string[];
@@ -34,6 +34,7 @@ export interface IUserForm {
 }
 
 export interface ILoginUser {
+  uid: string;
   email: string;
   nickname: string;
   role: UserRole;

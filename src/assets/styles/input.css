@@ -110,6 +110,10 @@ textarea {
   }
 }
 
+.text-error {
+  @apply text-sm text-red-600;
+}
+
 .thumb-area {
   width: 100%;
   height: 0;

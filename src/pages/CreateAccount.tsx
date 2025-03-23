@@ -6,7 +6,6 @@ import logo from "@/assets/images/logo.png";
 
 import { useNavigation } from "@/utils/navigation";
 import { useForm } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 
 import { ICreateAccountForm } from "@/interfaces/User";
 import { UserRole } from "@/components/enums/UserRole.enum";
@@ -62,23 +61,13 @@ export default function CreateAccount() {
     setLoading(true);
 
     try {
-<<<<<<< HEAD
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userData = userCredential.user;
-      const { uid } = userData;
-=======
       const {
         user: { uid },
       } = await createUserWithEmailAndPassword(auth, email, password);
->>>>>>> user-crud
 
       await setDoc(doc(db, "user", uid), {
         email,
-        nicakname: email.split("@")[0], // 임시용
+        nickname: email.split("@")[0], // 임시용
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime(),
         role: UserRole.Guest,
@@ -143,7 +132,6 @@ export default function CreateAccount() {
 
             <input
               type="password"
-              name=""
               id=""
               placeholder="비밀번호"
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
@@ -164,7 +152,6 @@ export default function CreateAccount() {
 
             <input
               type="password"
-              name=""
               id=""
               placeholder="비밀번호 확인"
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"

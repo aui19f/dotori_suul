@@ -9,6 +9,7 @@ import { useLoadingStore } from "@/stores/loadingStore";
 import * as Sentry from "@sentry/react";
 interface UserState {
   user: ILoginUser | null;
+
   isAuthenticated: boolean | null; // 인증 상태
   setIsAuthenticated: (isAuthenticated: boolean) => void;
 
@@ -34,7 +35,7 @@ export const initAuthListener = () => {
       const docSnap = await getDoc(doc(db, "user", uid));
       if (docSnap.exists()) {
         const { email, nickname, role } = docSnap.data();
-        useLoginStore.getState().login({ email, nickname, role });
+        useLoginStore.getState().login({ email, nickname, role, uid });
       } else {
         Sentry.captureException("User Data, No such document!");
       }

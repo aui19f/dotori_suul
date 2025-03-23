@@ -1,4 +1,3 @@
-import BreweryDetail from "@/components/BreweryDetail";
 import List from "@/components/List";
 import useBreweryDataStore from "@/stores/brewery";
 import { useEffect, useState } from "react";

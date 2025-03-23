@@ -8,7 +8,6 @@ import i_suul_abv from "@/assets/images/suul_abv.png";
 import i_suul_material from "@/assets/images/suul_material.png";
 
 import i_suul_storage from "@/assets/images/suul_storage.png";
-import i_modal_close from "@/assets/images/modal_close.png";
 
 export default function SuulInfo() {
   const data = {

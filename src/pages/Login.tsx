@@ -94,9 +94,7 @@ export default function Login() {
             />
 
             {errors.email && (
-              <p className="text-red-600 text-sm mb-3">
-                {errors.email?.message}
-              </p>
+              <p className="text-error mb-3">{errors.email?.message}</p>
             )}
 
             <input
@@ -110,9 +108,7 @@ export default function Login() {
             />
 
             {errors.password && (
-              <p className="text-red-600 text-sm mb-3">
-                {errors.password?.message}
-              </p>
+              <p className="text-error mb-3">{errors.password?.message}</p>
             )}
             {errors?.extraError?.message ? (
               <p>아이디 또는 비밀번호를 확인해주세요.</p>
