@@ -810,10 +810,6 @@ ul.text-lien-2 .explanation {
   margin: auto;
 }
 
-.m-2 {
-  margin: 0.5rem;
-}
-
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -1063,10 +1059,6 @@ ul.text-lien-2 .explanation {
 
 .w-screen {
   width: 100vw;
-}
-
-.min-w-\[480px\] {
-  min-width: 480px;
 }
 
 .max-w-3xl {
@@ -1666,10 +1658,6 @@ ul.text-lien-2 .explanation {
 
   .md\:items-center {
     align-items: center;
-  }
-
-  .md\:justify-center {
-    justify-content: center;
   }
 
   .md\:overflow-auto {
