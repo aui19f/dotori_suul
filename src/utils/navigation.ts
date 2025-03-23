@@ -1,5 +1,3 @@
-import { Writing } from "@/components/Writing";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useNavigation = () => {
