@@ -4,11 +4,14 @@ export interface ICreateAccountForm {
   email: string;
   password: string;
   password2: string;
+  extraError?: string;
 }
 
 export interface ILoginForm {
   email: string;
   password: string;
+
+  extraError?: string;
 }
 
 export interface IUserForm {
@@ -27,5 +30,11 @@ export interface IUserForm {
   };
   createdAt: string;
   updatedAt: string;
+  role: UserRole;
+}
+
+export interface ILoginUser {
+  email: string;
+  nickname: string;
   role: UserRole;
 }

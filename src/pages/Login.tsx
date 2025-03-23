@@ -4,37 +4,68 @@ import facebook from "@/assets/images/facebook.png";
 import naver from "@/assets/images/naver.png";
 import logo from "@/assets/images/logo.png";
 
+import React, { useEffect } from "react";
 import { useNavigation } from "@/utils/navigation";
-import React from "react";
+
 import { useForm } from "react-hook-form";
 import { ILoginForm } from "@/interfaces/User";
 
 import { useLoadingStore } from "@/stores/loadingStore";
 import Loading from "@/components/layout/Loading";
-import { auth } from "@/fbase";
+import { auth, db } from "@/fbase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import * as Sentry from "@sentry/react";
+import { FirebaseError } from "firebase/app";
+import { useLoginStore, initAuthListener } from "@/stores/loginStore";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
   const { navigateToBack, navigateToCreateAccount } = useNavigation();
-  const isLoading = useLoadingStore((state) => state.isLoading);
-  const setLoading = useLoadingStore((state) => state.setLoading);
+  const { isLoading, setLoading } = useLoadingStore();
+  const { isAuthenticated } = useLoginStore();
+
+  useEffect(() => {
+    initAuthListener();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigateToBack();
+    }
+  }, [isAuthenticated]); // user 상태가 변경될 때마다 실행
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors,
   } = useForm<ILoginForm>();
+
+  const resetError = () => {
+    clearErrors("extraError");
+  };
 
   const onSubmit = async ({ email, password }: ILoginForm) => {
     try {
       setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
-      setLoading(false);
+      const {
+        user: { uid },
+      } = await signInWithEmailAndPassword(auth, email, password);
+
       navigateToBack();
     } catch (error) {
-      console.log("[[[Error]]]", error);
+      if (error instanceof FirebaseError) {
+        setError("extraError", {
+          message: "아이디와 비밀번호를 확인해주세요.",
+        });
+        console.log("Login Error: ", error);
+      } else {
+        setError("extraError", { message: "-" });
+        Sentry.captureException(`로그인 error 발생: ${error}`);
+      }
     }
+    setLoading(false);
   };
 
   return (
@@ -52,6 +83,7 @@ export default function Login() {
               type="text"
               {...register("email", {
                 required: "필수입력사항입니다.",
+                onChange: resetError,
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
                   message: "이메일 형식이 아닙니다.",
@@ -69,7 +101,10 @@ export default function Login() {
 
             <input
               type="password"
-              {...register("password", { required: "필수입력사항입니다." })}
+              {...register("password", {
+                required: "필수입력사항입니다.",
+                onChange: resetError,
+              })}
               placeholder="비밀번호"
               className="border border-gray-400 h-12 pl-2 pr-1 mb-3"
             />
@@ -79,17 +114,24 @@ export default function Login() {
                 {errors.password?.message}
               </p>
             )}
-
-            <button className="h-12 bg-blue-600 text-white">로그인</button>
+            {errors?.extraError?.message ? (
+              <p>아이디 또는 비밀번호를 확인해주세요.</p>
+            ) : null}
+            <button
+              data-testid="login-button"
+              className="h-12 bg-blue-600 text-white"
+            >
+              로그인
+            </button>
           </form>
 
-          <div className="my-8 flex items-center">
+          {/* <div className="my-8 flex items-center">
             <div className="flex-1  border-t border-gray-400  mr-1"></div>
             <p className="text-gray-400">또는</p>
             <div className="flex-1  border-t border-gray-400  ml-1"></div>
-          </div>
+          </div> */}
 
-          <ul className="grid grid-cols-4 gap-8">
+          {/* <ul className="grid grid-cols-4 gap-8">
             <li>
               <img className="size-8 m-auto" src={kakao} alt="Logo" />
             </li>
@@ -102,7 +144,7 @@ export default function Login() {
             <li>
               <img className="size-8 m-auto" src={naver} alt="Logo" />
             </li>
-          </ul>
+          </ul> */}
 
           <div className="flex justify-center mt-8">
             <p className="text-sm mr-2">계정이 없나요? </p>
@@ -110,6 +152,7 @@ export default function Login() {
               onClick={navigateToCreateAccount}
               className="text-sm underline cursor-pointer hover:text-blue-600"
             >
+              {/**/}
               회원가입
             </p>
           </div>

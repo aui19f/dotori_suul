@@ -21,6 +21,12 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Firebase Emulator에 연결
+if (process.env.NODE_ENV === "test") {
+  firebaseConfig.authDomain = "localhost";
+  firebaseConfig.apiKey = "test-api-key"; // 테스트용 API 키
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
