@@ -7,6 +7,7 @@ import BreweryProduct from "@/components/BreweryProduct";
 import BreweryReview from "@/components/BreweryReview";
 import WritingBrewery from "@/components/forms/WritingBrewery";
 import HomeBrewDetail from "@/components/HomeBrewDetail";
+import HomeBrewWriting from "@/components/HomeBrewWriting";
 import SuulDetail from "@/components/SuulDetail";
 import Writing from "@/components/Writing";
 import WritingList from "@/components/WritingList";
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
           { path: "", element: <Homebrew /> },
           { path: "homebrew", element: <Homebrew /> },
           { path: "homebrew/:id", element: <HomeBrewDetail /> },
+          { path: "homebrew/writing", element: <HomeBrewWriting /> },
         ],
       },
 

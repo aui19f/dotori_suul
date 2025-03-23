@@ -850,6 +850,11 @@ ul.text-lien-2 .explanation {
   margin-bottom: 2rem;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1083,6 +1088,10 @@ ul.text-lien-2 .explanation {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-\[3\] {
+  flex: 3;
 }
 
 @keyframes spin {
@@ -1694,4 +1703,28 @@ ul.text-lien-2 .explanation {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity, 1));
   }
+}
+
+.\[\&_input\]\:mr-1 input {
+  margin-right: 0.25rem;
+}
+
+.\[\&_input\]\:w-full input {
+  width: 100%;
+}
+
+.\[\&_li\]\:mb-1 li {
+  margin-bottom: 0.25rem;
+}
+
+.\[\&_li\]\:flex li {
+  display: flex;
+}
+
+.\[\&_li\]\:w-full li {
+  width: 100%;
+}
+
+.\[\&_li\]\:items-center li {
+  align-items: center;
 }
