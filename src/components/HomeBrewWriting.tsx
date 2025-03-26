@@ -5,7 +5,7 @@ import { useState } from "react";
 import DraggableItem from "@/components/DraggableItem";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-
+import i_arrow_left_full from "@/assets/images/arrow_left_full.png";
 export default function HomeBrewWriting() {
   const { register } = useForm<IHomeBreweryForm>();
   const [items, setItems] = useState([
@@ -22,7 +22,7 @@ export default function HomeBrewWriting() {
   };
   return (
     <article className="my-4 max-w-[750px] m-auto">
-      <header className="bg-gray-50 p-2 mb-2">
+      <header className="text bg-gray-50 p-2 mb-2">
         <img src="" alt="" />
         <h2 className="text-2xl">글작성</h2>
       </header>
@@ -34,12 +34,14 @@ export default function HomeBrewWriting() {
 
           <div className="flex items-center w-full px-4 py-2">
             <label className="hidden md:block flex-1 ">제목</label>
-            <input
-              type="text"
-              {...register("title", { required: "필수입력사항입니다." })}
-              className="flex-[3]"
-              placeholder="제목을 입력하세요."
-            />
+            <div className="flex-[3]">
+              <input
+                type="text"
+                {...register("title", { required: "필수입력사항입니다." })}
+                placeholder="제목을 입력하세요."
+                className="w-full"
+              />
+            </div>
           </div>
 
           <div className="flex items-center w-full px-4 py-2">
@@ -48,10 +50,15 @@ export default function HomeBrewWriting() {
               <li className="flex items-center">
                 <input type="text" className="flex-1 mr-2" />
                 <input type="number" className="mr-2" />
-                <select>
+                <select className="mr-2">
                   <option value="ml">ml</option>
                   <option value="g">g</option>
                 </select>
+                <label className="input-radio">
+                  One
+                  <input type="radio" name="radio" />
+                  <span className="checkmark"></span>
+                </label>
               </li>
             </ul>
           </div>
@@ -66,7 +73,14 @@ export default function HomeBrewWriting() {
                     index={index}
                     text={item.text}
                     moveItem={moveItem}
-                  ></DraggableItem>
+                  >
+                    <div className="flex w-full">
+                      <textarea className="flex-1 mr-2"></textarea>
+                      <div className="mt-1 size-6 mt- focus:opacity-60">
+                        <img src={i_arrow_left_full} alt="" />
+                      </div>
+                    </div>
+                  </DraggableItem>
                 ))}
                 {/* {items.map((item, index) => (
                   <DraggableIte

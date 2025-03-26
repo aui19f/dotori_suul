@@ -10,10 +10,12 @@ export default function DraggableItem({
   index,
   text,
   moveItem,
+  children,
 }: {
   index: number;
   text: string;
   moveItem: any;
+  children: React.ReactNode;
 }) {
   const [, drag] = useDrag({
     type: ITEM_TYPE,
@@ -32,7 +34,8 @@ export default function DraggableItem({
 
   return (
     <li ref={(node) => drag(drop(node))}>
-      <input type="text" value={text} />
+      {/* <input type="text" value={text} /> */}
+      {children}
     </li>
   );
 }

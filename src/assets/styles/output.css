@@ -840,6 +840,11 @@ ul.text-lien-2 .explanation {
   margin-bottom: 0.5rem;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -848,11 +853,6 @@ ul.text-lien-2 .explanation {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .mb-1 {
@@ -1592,6 +1592,10 @@ ul.text-lien-2 .explanation {
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
 
+.focus\:opacity-60:focus {
+  opacity: 0.6;
+}
+
 @media (min-width: 640px) {
   .sm\:w-96 {
     width: 24rem;
@@ -1719,10 +1723,6 @@ ul.text-lien-2 .explanation {
 
 .\[\&_li\]\:flex li {
   display: flex;
-}
-
-.\[\&_li\]\:w-full li {
-  width: 100%;
 }
 
 .\[\&_li\]\:items-center li {
